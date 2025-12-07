@@ -72,12 +72,12 @@ const CampaignDetailsModal = ({ open, onClose, data }: any) => {
                 </Typography>
 
                 <Grid container spacing={3}>
-                    <Grid item xs={12} md={6}>
+                    <Grid size={{ xs: 12, md: 6 }}>
                         <Typography color="gray.300">Campaign Name</Typography>
                         <Typography fontWeight={600}>{data.name}</Typography>
                     </Grid>
 
-                    <Grid item xs={12} md={6}>
+                    <Grid size={{ xs: 12, md: 6 }}>
                         <Typography color="gray.300">Platforms</Typography>
                         <Box display="flex" gap={1} mt={1}>
                             {data.platforms?.map((p: string, i: number) => (
@@ -97,7 +97,7 @@ const CampaignDetailsModal = ({ open, onClose, data }: any) => {
                         </Box>
                     </Grid>
 
-                    <Grid item xs={12} md={6}>
+                    <Grid size={{ xs: 12, md: 6 }}>
                         <Typography color="gray.300">Duration</Typography>
                         <Box display="flex" alignItems="center" gap={1} mt={0.5}>
                             <CalendarMonth sx={{ fontSize: 18, color: "#CF9702" }} />
@@ -107,7 +107,7 @@ const CampaignDetailsModal = ({ open, onClose, data }: any) => {
                         </Box>
                     </Grid>
 
-                    <Grid item xs={12} md={6}>
+                    <Grid size={{ xs: 12, md: 6 }}>
                         <Typography color="gray.300">Status</Typography>
                         <Chip
                             label={data.status}
@@ -148,7 +148,7 @@ const CampaignDetailsModal = ({ open, onClose, data }: any) => {
                 </Typography>
 
                 <Grid container spacing={3}>
-                    <Grid item size={{ xs: 6, md: 4 }}>
+                    <Grid size={{ xs: 12, md: 6 }}>
                         <Box
                             sx={{
                                 background: "rgba(255,255,255,0.05)",
@@ -165,7 +165,7 @@ const CampaignDetailsModal = ({ open, onClose, data }: any) => {
                         </Box>
                     </Grid>
 
-                    <Grid item size={{ xs: 6, md: 4 }}>
+                    <Grid size={{ xs: 12, md: 6 }}>
                         <Box
                             sx={{
                                 background: "rgba(255,255,255,0.05)",
@@ -182,7 +182,7 @@ const CampaignDetailsModal = ({ open, onClose, data }: any) => {
                         </Box>
                     </Grid>
 
-                    <Grid item size={{ xs: 6, md: 4 }}>
+                    <Grid size={{ xs: 12, md: 6 }}>
                         <Box
                             sx={{
                                 background: "rgba(255,255,255,0.05)",

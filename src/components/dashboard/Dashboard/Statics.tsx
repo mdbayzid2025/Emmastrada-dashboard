@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { FiDollarSign, FiTv, FiUserCheck, FiUsers, FiVideo } from "react-icons/fi";
+import { FiDollarSign, FiUserCheck, FiUsers } from "react-icons/fi";
 import { GoComment } from "react-icons/go";
 import { IoMusicalNotes } from "react-icons/io5";
 const Statics = () => {

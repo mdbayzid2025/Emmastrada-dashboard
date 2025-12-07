@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 
-import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import { FaTrashAlt } from "react-icons/fa";
 import { IoEyeOutline } from "react-icons/io5";
 import { PiUserCircleBold, PiUserSoundBold } from "react-icons/pi"; // Artist icon
 import { toast } from "sonner";
@@ -40,7 +40,7 @@ const StyledRow = styled(TableRow)(() => ({
 // ---------------- USER LIST COMPONENT ----------------
 const UsersList = () => {
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage] = useState(10);
 
   const [selectedUser, setSelectedUser] = useState(null);
   const [openDetails, setOpenDetails] = useState(false);
@@ -210,8 +210,8 @@ const UsersList = () => {
 
       <ConfirmModal
         open={openConfirmModal}
-        title={`Delete ${selectedUser?.name}"`}
-        content={`Are you sure you want to delete "${selectedUser?.name}"?`}
+        title={`Delete ${(selectedUser as any)?.name}"`}
+        content={`Are you sure you want to delete "${(selectedUser as any)?.name}"?`}
         okText="Yes, Delete"
         cancelText="Cancel"
         onConfirm={handleDeleteAdmin}

@@ -5,16 +5,15 @@ import {
   Box,
   Button,
   Grid,
-  TextField,
-  Typography,
+  Typography
 } from "@mui/material";
 
 import React, { useEffect, useState } from "react";
 import { FaArrowDown } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBinLine } from "react-icons/ri";
-import SharedModal from "../../shared/SharedModal";
 import SharedInput from "../../shared/SharedInput";
+import SharedModal from "../../shared/SharedModal";
 
 const FAQ = () => {
   const [open, setOpen] = useState(false);

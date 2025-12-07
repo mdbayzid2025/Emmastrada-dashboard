@@ -1,24 +1,23 @@
-import React, { useState } from "react";
+import LockIcon from "@mui/icons-material/Lock";
+import LockOpenIcon from "@mui/icons-material/LockOpen";
 import {
   Box,
   Button,
-  Typography,
+  IconButton,
+  Paper,
+  styled,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
-  Tooltip,
-  IconButton,
-  styled,
+  Typography
 } from "@mui/material";
+import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { FaTrashAlt } from "react-icons/fa";
 import { IoEyeOutline } from "react-icons/io5";
-import LockIcon from "@mui/icons-material/Lock";
-import LockOpenIcon from "@mui/icons-material/LockOpen";
-import toast from "react-hot-toast";
 import ConfirmModal from "../../UI/ConfirmModel";
 import AddAdminModal from "./AddAdminModal"; // Your existing AddAdminModal
 
@@ -58,7 +57,7 @@ const AdminList: React.FC = () => {
   const [selectedAdmin, setSelectedAdmin] = useState<Admin | null>(null);
   const [openConfirm, setOpenConfirm] = useState(false);
   const [openAddModal, setOpenAddModal] = useState(false);
-  const [openDetails, setOpenDetails] = useState(false);
+  
 
   const handleDeleteAdmin = () => {
     if (!selectedAdmin) return;
@@ -133,7 +132,7 @@ const AdminList: React.FC = () => {
                     <IoEyeOutline
                       size={20}
                       className="text-blue-400 cursor-pointer"
-                      onClick={() => { setSelectedAdmin(admin); setOpenDetails(true); }}
+                      onClick={() => { setSelectedAdmin(admin);  }}
                     />
                     <IconButton onClick={() => handleUpdateStatus(admin)}>
                       {admin.status === "ACTIVE" ? <LockOpenIcon color="success" /> : <LockIcon color="error" />}

@@ -1,20 +1,19 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { AttachMoney, Edit } from "@mui/icons-material";
 import {
+  Box,
   Button,
+  Card,
+  CardContent,
+  CardHeader,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
-  TextField,
-  Card,
-  CardHeader,
-  CardContent,
-  Typography,
-  Box,
+  Typography
 } from "@mui/material";
-import { Edit, AttachMoney } from "@mui/icons-material";
+import React, { useEffect, useState } from "react";
 import SharedInput from "../../shared/SharedInput";
 
 const CommissionManage = () => {
@@ -26,13 +25,11 @@ const CommissionManage = () => {
   const [currentType, setCurrentType] = useState<"artist" | "promotor" | null>(null);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [formData, setFormData] = useState({ fee: "" });
-  const [errors, setErrors] = useState({ fee: "" });
+  const [formData, setFormData] = useState({ fee: "" });  
 
   useEffect(() => {
     if (!isModalOpen) {
-      setFormData({ fee: "" });
-      setErrors({ fee: "" });
+      setFormData({ fee: "" });      
       setCurrentType(null);
     }
   }, [isModalOpen]);

@@ -1,17 +1,15 @@
+import CloseIcon from "@mui/icons-material/Close";
 import {
   Avatar,
   Box,
   Chip,
+  Dialog,
   Divider,
   Grid,
   IconButton,
-  Modal,
-  Typography,
-  Paper,
-  Dialog,
+  Typography
 } from "@mui/material";
 import dayjs from "dayjs";
-import CloseIcon from "@mui/icons-material/Close";
 
 
 
@@ -99,30 +97,30 @@ const UserDetailsModal = ({ open, data, onClose }: any) => {
 
         {/* User Info */}
         <Grid container spacing={3} mt={2}>
-          <Grid item xs={12} sm={6}>
+          <Grid size={{xs:12, sm:6}} >
             <Typography color="gray">Email</Typography>
             <Typography fontWeight={500}>{data?.email}</Typography>
           </Grid>
 
-          <Grid item xs={12} sm={6}>
+          <Grid size={{xs:12, sm:6}} >
             <Typography color="gray">Join Date</Typography>
             <Typography fontWeight={500}>
               {dayjs(data?.joinDate).format("DD MMMM, YYYY")}
             </Typography>
           </Grid>
 
-          <Grid item xs={12} sm={6}>
+          <Grid size={{xs:12, sm:6}} >
             <Typography color="gray">Phone</Typography>
             <Typography fontWeight={500}>{data?.phone ?? "—"}</Typography>
           </Grid>
 
-          <Grid item xs={12} sm={6}>
+          <Grid size={{xs:12, sm:6}} >
             <Typography color="gray">Location</Typography>
             <Typography fontWeight={500}>{data?.location ?? "—"}</Typography>
           </Grid>
 
           {data?.role?.toLowerCase() === "artist" && (
-            <Grid item xs={12} sm={6}>
+            <Grid size={{xs:12, sm:6}} >
               <Typography color="gray">Followers</Typography>
               <Typography fontWeight={700} color="primary">
                 {data?.followers}
@@ -137,17 +135,17 @@ const UserDetailsModal = ({ open, data, onClose }: any) => {
         </Typography>
 
         <Grid container spacing={2} mt={1}>
-          <Grid item xs={12} sm={4}>
+          <Grid size={{ xs: 12, sm: 4 }}>
             <Typography color="gray">Instagram</Typography>
             <Typography fontWeight={500}>{data?.instagram ?? "—"}</Typography>
           </Grid>
 
-          <Grid item xs={12} sm={4}>
+          <Grid size={{ xs: 12, sm: 4 }}>
             <Typography color="gray">Tiktok</Typography>
             <Typography fontWeight={500}>{data?.tiktok ?? "—"}</Typography>
           </Grid>
 
-          <Grid item xs={12} sm={4}>
+          <Grid size={{ xs: 12, sm: 4 }}>
             <Typography color="gray">YouTube</Typography>
             <Typography fontWeight={500}>{data?.youtube ?? "—"}</Typography>
           </Grid>

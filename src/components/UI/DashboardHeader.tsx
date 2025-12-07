@@ -1,9 +1,9 @@
 import { BellOutlined } from "@ant-design/icons";
 
-import { useGetProfileQuery } from "../../redux/features/auth/authApi";
-import { imageUrl } from "../../redux/base/baseAPI";
-import { Avatar, Badge, Box, Button } from "@mui/material";
+import { Avatar, Badge, Box } from "@mui/material";
 import { Link } from "react-router-dom";
+import { imageUrl } from "../../redux/base/baseAPI";
+import { useGetProfileQuery } from "../../redux/features/auth/authApi";
 
 const DashboardHeader = () => {
   const { data: profileData } = useGetProfileQuery(undefined);

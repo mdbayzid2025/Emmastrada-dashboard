@@ -5,8 +5,7 @@ import {
   CardContent,
   CardHeader,
   CircularProgress,
-  TextField,
-  Typography,
+  Typography
 } from "@mui/material";
 
 import { useEffect, useState } from "react";
@@ -17,8 +16,7 @@ import { useGetProfileQuery } from "../../../redux/features/auth/authApi";
 import { useEditProfileMutation } from "../../../redux/features/user/userApi";
 import SharedInput from "../../shared/SharedInput";
 
-const PersonalInformation = () => {
-  const [fileList, setFileList] = useState<any[]>([]);
+const PersonalInformation = () => {  
   const [imgURL, setImgURL] = useState<string | null>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
 
@@ -51,6 +49,7 @@ const PersonalInformation = () => {
   const onSubmit = async () => {
     try {
       const res = await editProfile(formData).unwrap();
+      console.log('res', res);
       refetch();
       toast.success("Profile updated");
     } catch (error) {
@@ -67,10 +66,11 @@ const PersonalInformation = () => {
 
     try {
       const res = await editProfile(formData).unwrap();
+      console.log('res', res);
+      
       toast.success("Profile image updated");
       setImageFile(null);
-      setImgURL(null);
-      setFileList([]);
+      setImgURL(null);      
       refetch();
     } catch (err) {
       toast.error("Upload failed");

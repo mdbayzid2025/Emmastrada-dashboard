@@ -24,9 +24,10 @@ const StyledHeadCell = styled(TableCell)({
 
 const CampaignsList = () => {
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [rowsPerPage] = useState(10);
     const [selectedCampaign, setSelectedCampaign] = useState(null);
     const [openDetails, setOpenDetails] = useState(false);
+
 
     return (
         <TableContainer component={Paper} className="bg-transparent!">
