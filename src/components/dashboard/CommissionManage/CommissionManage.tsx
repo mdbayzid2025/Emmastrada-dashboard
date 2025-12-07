@@ -77,7 +77,7 @@ const CommissionManage = () => {
 
           <Card sx={{ background: 'var(--color-cardBg)', border: '1px solid rgba(255,255,255,0.5)' }}>
             <CardHeader
-              title={<h1 className="text-slate-200">Artist Commission</h1>}
+              title={<h1 className="text-slate-200">Artist Commission (%)</h1>}
               action={
                 <Button
                   variant="contained"
@@ -112,7 +112,7 @@ const CommissionManage = () => {
                 <Box>
                   <Typography variant="body2">Artist Commission</Typography>
                   <Typography variant="h4" fontWeight="bold">
-                    {artistCommission}
+                    {artistCommission}%
                   </Typography>
                 </Box>
               </Box>
@@ -128,7 +128,7 @@ const CommissionManage = () => {
 
           <Card sx={{ background: 'var(--color-cardBg)', border: '1px solid rgba(255,255,255,0.5)' }}>
             <CardHeader
-              title={<h1 className="text-slate-200">Promotor Commission</h1>}
+              title={<h1 className="text-slate-200">Promotor Commission (%)</h1>}
               action={
                 <Button
                   variant="contained"
@@ -163,7 +163,7 @@ const CommissionManage = () => {
                 <Box>
                   <Typography variant="body2">Promotor Commission</Typography>
                   <Typography variant="h4" fontWeight="bold">
-                    {promotorCommission}
+                    {promotorCommission}%
                   </Typography>
                 </Box>
               </Box>
@@ -206,8 +206,8 @@ const CommissionManage = () => {
             }}
           >
             <SharedInput
-              label="Commission Fee"
-              placeholder="Commission Fee"
+              label="Commission (%)"
+              placeholder="Commission (%)"
               value={formData.fee}
               onChange={(e: any) => handleChange("fee", e.target.value)}
             />
