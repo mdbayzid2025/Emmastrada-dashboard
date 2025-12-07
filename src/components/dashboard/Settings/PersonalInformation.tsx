@@ -94,7 +94,8 @@ const PersonalInformation = () => {
         <Card
           sx={{
             height: "100%",
-            background: 'var(--color-cardBg)'
+            background: 'var(--color-cardBg)',
+             border: '1px solid rgba(255,255,255,0.5)'
           }}
         >
           <CardHeader
@@ -168,7 +169,7 @@ const PersonalInformation = () => {
         </Card>
 
         {/* Profile Form */}
-        <Card sx={{ p: 3, maxWidth: 600, background: 'var(--color-cardBg)' }} >
+        <Card sx={{ p: 3, maxWidth: 600, background: 'var(--color-cardBg)', border: '1px solid rgba(255,255,255,0.5)' }} >
           <Typography variant="h6" fontWeight={600} color="var(--color-secondary)" mb={3}>
             Profile Information
           </Typography>

@@ -153,13 +153,7 @@ const UsersList = () => {
                       size={20}
                       className="text-blue-400 cursor-pointer"
                     onClick={() => {setOpenDetails(true); setSelectedUser(row)}}
-                    />
-
-                    <FaEdit
-                      size={18}
-                      className="text-green-400 cursor-pointer"
-                    />
-
+                    />                
                     <FaTrashAlt
                       size={18}
                       className="text-red-500 cursor-pointer"

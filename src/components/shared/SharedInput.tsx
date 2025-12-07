@@ -62,7 +62,7 @@ const SharedInput = ({
         },
 
         "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-          borderColor: "#666",
+          borderColor: "rgba(255,255,255,0.5)",
         },
 
         "&:hover .MuiOutlinedInput-notchedOutline": {

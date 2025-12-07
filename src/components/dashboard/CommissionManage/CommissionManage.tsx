@@ -1,74 +1,240 @@
-import { Box, Card, IconButton, Typography } from "@mui/material";
-import { MdEdit } from "react-icons/md";
-import { PiCurrencyDollar } from "react-icons/pi";
-import { useState } from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField,
+  Card,
+  CardHeader,
+  CardContent,
+  Typography,
+  Box,
+} from "@mui/material";
+import { Edit, AttachMoney } from "@mui/icons-material";
+import SharedInput from "../../shared/SharedInput";
 
 const CommissionManage = () => {
-  const [artistCommission, setArtistCommission] = useState(0);
-  const [promoterCommission, setPromoterCommission] = useState(0);
+  // Separate commission values
+  const [artistCommission, setArtistCommission] = useState<number>(200);
+  const [promotorCommission, setPromotorCommission] = useState<number>(150);
+
+  // Track which commission is being edited
+  const [currentType, setCurrentType] = useState<"artist" | "promotor" | null>(null);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [formData, setFormData] = useState({ fee: "" });
+  const [errors, setErrors] = useState({ fee: "" });
+
+  useEffect(() => {
+    if (!isModalOpen) {
+      setFormData({ fee: "" });
+      setErrors({ fee: "" });
+      setCurrentType(null);
+    }
+  }, [isModalOpen]);
+
+  const handleOpenModal = (type: "artist" | "promotor") => {
+    setCurrentType(type);
+
+    setFormData({
+      fee:
+        type === "artist"
+          ? artistCommission.toString()
+          : promotorCommission.toString(),
+    });
+
+    setIsModalOpen(true);
+  };
+
+
+  const handleChange = (key: string, value: string) => {
+    setFormData({ ...formData, [key]: value });
+  };
+
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const feeValue = parseFloat(formData.fee);
+
+    if (currentType === "artist") {
+      setArtistCommission(feeValue);
+    } else if (currentType === "promotor") {
+      setPromotorCommission(feeValue);
+    }
+
+    setIsModalOpen(false);
+  };
 
   return (
-    <Box className="p-6">
-      <Typography variant="h5" fontWeight={700} mb={3}>
-        Commission Management
-      </Typography>
+    <Box p={4}>
+      <Box sx={{ display: "flex", width: '100%', gap: 5, background: 'transparent' }}>
+        {/* ============ Artist Commission ============ */}
+        <Box sx={{ maxWidth: 600, width: "100%", }}>
+          <Typography variant="h5" fontWeight="bold" mb={3} >
+            Commission for Artist
+          </Typography>
 
-      {/* ===== Card Wrapper ===== */}
-      <Box className="flex flex-col gap-5 max-w-xl">
+          <Card sx={{ background: 'var(--color-cardBg)', border: '1px solid rgba(255,255,255,0.5)' }}>
+            <CardHeader
+              title={<h1 className="text-slate-200">Artist Commission</h1>}
+              action={
+                <Button
+                  variant="contained"
+                  startIcon={<Edit />}
+                  onClick={() => handleOpenModal("artist")}
+                >
+                  Edit
+                </Button>
+              }
+            />
 
-        {/* -------- Artist Commission -------- */}
-        <Card className="p-4 shadow-md rounded-xl">
-          <Box className="flex justify-between items-center mb-3">
-            <Typography variant="h6" fontWeight={600}>
-              Commission for Artist Campaign
-            </Typography>
-            <IconButton size="small" className="text-gray-600 hover:text-black">
-              <MdEdit size={18} />
-            </IconButton>
-          </Box>
+            <CardContent>
+              <Box
+                display="flex"
+                alignItems="center"
+                p={3}
+                borderRadius={2}
+                bgcolor="#cd671c"
+                color="white"
+              >
+                <Box
+                  sx={{
+                    background: "white",
+                    borderRadius: "50%",
+                    padding: 1.5,
+                    mr: 3,
+                  }}
+                >
+                  <AttachMoney fontSize="large" sx={{ color: "black" }} />
+                </Box>
 
-          <Box className="bg-[#D66919] rounded-lg p-4 flex items-center gap-4">
-            <Box className="bg-white w-12 h-12 rounded-full flex items-center justify-center">
-              <PiCurrencyDollar size={28} />
-            </Box>
-            <Box>
-              <Typography className="text-white text-sm">
-                Artist Campaign Commission
-              </Typography>
-              <Typography className="text-white text-2xl font-bold">
-                {artistCommission}%
-              </Typography>
-            </Box>
-          </Box>
-        </Card>
+                <Box>
+                  <Typography variant="body2">Artist Commission</Typography>
+                  <Typography variant="h4" fontWeight="bold">
+                    {artistCommission}
+                  </Typography>
+                </Box>
+              </Box>
+            </CardContent>
+          </Card>
+        </Box>
 
-        {/* -------- Promoter Commission -------- */}
-        <Card className="p-4 shadow-md rounded-xl">
-          <Box className="flex justify-between items-center mb-3">
-            <Typography variant="h6" fontWeight={600}>
-              Commission for Promoter Campaign
-            </Typography>
-            <IconButton size="small" className="text-gray-600 hover:text-black">
-              <MdEdit size={18} />
-            </IconButton>
-          </Box>
+        {/* ============ Promotor Commission ============ */}
+        <Box sx={{ maxWidth: 600, width: "100%", }}>
+          <Typography variant="h5" fontWeight="bold" mb={3}>
+            Commission for Promotor
+          </Typography>
 
-          <Box className="bg-[#D66919] rounded-lg p-4 flex items-center gap-4">
-            <Box className="bg-white w-12 h-12 rounded-full flex items-center justify-center">
-              <PiCurrencyDollar size={28} />
-            </Box>
-            <Box>
-              <Typography className="text-white text-sm">
-                Promoter Campaign Commission
-              </Typography>
-              <Typography className="text-white text-2xl font-bold">
-                {promoterCommission}%
-              </Typography>
-            </Box>
-          </Box>
-        </Card>
+          <Card sx={{ background: 'var(--color-cardBg)', border: '1px solid rgba(255,255,255,0.5)' }}>
+            <CardHeader
+              title={<h1 className="text-slate-200">Promotor Commission</h1>}
+              action={
+                <Button
+                  variant="contained"
+                  startIcon={<Edit />}
+                  onClick={() => handleOpenModal("promotor")}
+                >
+                  Edit
+                </Button>
+              }
+            />
 
+            <CardContent>
+              <Box
+                display="flex"
+                alignItems="center"
+                p={3}
+                borderRadius={2}
+                bgcolor="#cd671c"
+                color="white"
+              >
+                <Box
+                  sx={{
+                    background: "white",
+                    borderRadius: "50%",
+                    padding: 1.5,
+                    mr: 3,
+                  }}
+                >
+                  <AttachMoney fontSize="large" sx={{ color: "black" }} />
+                </Box>
+
+                <Box>
+                  <Typography variant="body2">Promotor Commission</Typography>
+                  <Typography variant="h4" fontWeight="bold">
+                    {promotorCommission}
+                  </Typography>
+                </Box>
+              </Box>
+            </CardContent>
+          </Card>
+        </Box>
       </Box>
+
+      {/* -------------------- MODAL --------------------- */}
+      <Dialog
+        open={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        fullWidth
+        maxWidth="sm"
+        className="bg-black/40"
+        PaperProps={{
+          sx: {
+            border: "2px solid rgba(255,255,255,0.2)",   // <-- White border
+            borderRadius: "12px",        // <-- Smooth rounded corners
+            backgroundColor: "var(--color-cardBg)",
+            overflow: "hidden",
+          },
+        }}
+      >
+        <DialogTitle
+          sx={{
+            background: "var(--color-cardBg)",
+            color: "white",
+            borderBottom: "1px solid rgba(255,255,255,0.2)",
+          }}
+        >
+          Edit {currentType === "artist" ? "Artist" : "Promotor"} Commission
+        </DialogTitle>
+
+        <form onSubmit={handleSubmit} className="bg-cardBg">
+          <DialogContent
+            sx={{
+              background: "transparent",
+              pt: 3,
+            }}
+          >
+            <SharedInput
+              label="Commission Fee"
+              placeholder="Commission Fee"
+              value={formData.fee}
+              onChange={(e: any) => handleChange("fee", e.target.value)}
+            />
+          </DialogContent>
+
+          <DialogActions sx={{ p: 2 }}>
+            <Button variant="outlined" onClick={() => setIsModalOpen(false)}>
+              Cancel
+            </Button>
+
+            <Button
+              type="submit"
+              variant="contained"
+              sx={{
+                background: "#cd671c",
+                ":hover": { background: "#b45a19" },
+              }}
+            >
+              Update Fee
+            </Button>
+          </DialogActions>
+        </form>
+      </Dialog>
+
     </Box>
   );
 };

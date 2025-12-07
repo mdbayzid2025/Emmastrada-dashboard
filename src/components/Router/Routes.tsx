@@ -10,10 +10,10 @@ import { Dashboard } from "../dashboard/Dashboard/Dashboard";
 
 import Notifications from "../dashboard/Notifications/Notifications";
 import AdminList from "../dashboard/AdminList/AdminList";
-import Genres from "../dashboard/Genres/Genres";
 import UserList from "../dashboard/UserList/UserList";
 import CampaignsList from "../dashboard/CampaignsList/CampaignsList";
 import Settings from "../dashboard/Settings/Settings";
+import CommissionManage from "../dashboard/CommissionManage/CommissionManage";
 
 
 const router = createBrowserRouter([
@@ -39,14 +39,13 @@ const router = createBrowserRouter([
                 element: <UserList />
             },                              
             {
+                path: "commission-manage",
+                element: <CommissionManage />
+            },                                                                                  
+            {
                 path: "campaigns-list",
                 element: <CampaignsList />
-            },                                                                       
-            {
-                path: "genres",
-                element: <Genres />
-            },                              
-           
+            },                                                                                  
             {
                 path: "settings",
                 element: <Settings />
