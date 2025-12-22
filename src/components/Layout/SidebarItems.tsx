@@ -1,4 +1,4 @@
-import { DollarSign, Music } from "lucide-react";
+import { Copy, DollarSign, Music } from "lucide-react";
 import { FaStore } from "react-icons/fa";
 import { IoSettingsOutline } from "react-icons/io5";
 import { LuNotepadText } from "react-icons/lu";
@@ -21,6 +21,11 @@ export const navItems: NavItem[] = [
     to: "/campaigns-list",
     label: "Campaigns List",
     icon: <Music />
+  },
+  {
+    to: "/category-manage",
+    label: "Category Manage",
+    icon: <Copy />
   },
   {
     to: "/commission-manage",

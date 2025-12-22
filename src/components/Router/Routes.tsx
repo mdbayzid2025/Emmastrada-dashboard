@@ -14,6 +14,7 @@ import UserList from "../dashboard/UserList/UserList";
 import CampaignsList from "../dashboard/CampaignsList/CampaignsList";
 import Settings from "../dashboard/Settings/Settings";
 import CommissionManage from "../dashboard/CommissionManage/CommissionManage";
+import CategoryManage from "../dashboard/CategoryManage/CategoryManage";
 
 
 const router = createBrowserRouter([
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
                 path: "users",
                 element: <UserList />
             },                              
+            {
+                path: "category-manage",
+                element: <CategoryManage />
+            },                                                                                  
             {
                 path: "commission-manage",
                 element: <CommissionManage />

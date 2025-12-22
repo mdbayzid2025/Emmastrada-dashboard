@@ -19,7 +19,7 @@ const userApi = baseApi.injectEndpoints({
     createAdmin: build.mutation({
       query: (data)=>{
         return {
-          url: "/users",
+          url: "/admins/create-admin",
           method: "POST",
           body: data
         }

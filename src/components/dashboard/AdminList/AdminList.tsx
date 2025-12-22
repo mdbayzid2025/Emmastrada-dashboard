@@ -170,8 +170,6 @@ const AdminList: React.FC = () => {
         }
       />
 
-      {/* Admin Details Modal */}
-      {/* <UserDetailsModal open={openDetails} data={selectedAdmin} onClose={() => setOpenDetails(false)} /> */}
     </Box>
   );
 };

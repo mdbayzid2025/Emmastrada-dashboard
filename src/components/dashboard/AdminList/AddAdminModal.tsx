@@ -28,9 +28,9 @@ const AddAdminModal: React.FC<AddAdminModalProps> = ({
   onSubmit,
 }) => {
   const [values, setValues] = React.useState({
-    name: "",
-    email: "",
-    role: "",
+    firstName: "",
+    lastName: "",
+    email: "",    
     password: "",
   });
 
@@ -40,9 +40,9 @@ const AddAdminModal: React.FC<AddAdminModalProps> = ({
   useEffect(() => {
     if (editData) {
       setValues({
-        name: editData?.name || "",
-        email: editData?.email || "",
-        role: editData?.role || "",
+        firstName: editData?.firstName || "",
+        lastName: editData?.lastName || "",
+        email: editData?.email || "",        
         password: "",
       });
     }
@@ -51,16 +51,20 @@ const AddAdminModal: React.FC<AddAdminModalProps> = ({
   const handleClose = () => {
     setOpen(false);
     setValues({
-      name: "",
-      email: "",
-      role: "",
+      firstName: "",
+      lastName: "",
+      email: "",      
       password: "",
     });
   };
 
 
   const handleSubmit = () => {
-    if (!values.name || !values.email || !values.role || (!editData && !values.password)) {
+    if (
+      !values.firstName 
+      || !values.lastName 
+      || !values.email       
+      || (!editData && !values.password)) {
       return;
     }
     onSubmit(values);
@@ -91,10 +95,18 @@ const AddAdminModal: React.FC<AddAdminModalProps> = ({
           {/* Name */}
           <Grid size={12}>
             <SharedInput
-              label="Name"
-              placeholder="Name"
-              value={values.name}
-              onChange={(e: any) => handleChange("name", e.target.value)}
+              label="First Name"
+              placeholder="First Name"
+              value={values.firstName}
+              onChange={(e: any) => handleChange("firstName", e.target.value)}
+            />
+          </Grid>
+          <Grid size={12}>
+            <SharedInput
+              label="Last Name"
+              placeholder="Last Name"
+              value={values.lastName}
+              onChange={(e: any) => handleChange("lastName", e.target.value)}
             />
           </Grid>
 
@@ -108,39 +120,6 @@ const AddAdminModal: React.FC<AddAdminModalProps> = ({
               onChange={(e: any) => handleChange("email", e.target.value)}
               required
             />
-          </Grid>
-
-          {/* Role */}
-          <Grid size={12}>
-            <TextField
-              fullWidth
-              select
-              label="Role"
-              value={values.role}
-              onChange={(e) => setValues({ ...values, role: e.target.value })}
-              required
-              sx={{
-                height: 45,
-                "& .MuiOutlinedInput-root": {
-                  color: "#ffffff",
-                  height: 45,
-                },
-                "& .MuiInputBase-input::placeholder": {
-                  color: "#9ca3af",
-                  opacity: 1,
-                },
-                "& .MuiInputLabel-root": { color: "#ccc" },
-                "& .MuiInputLabel-root.Mui-focused": { color: "var(--color-black-200)" },
-                "& .MuiOutlinedInput-notchedOutline": { borderColor: "#666" },
-                "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "var(--color-black-200)" },
-                "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                  borderColor: "var(--color-black-200)",
-                },
-              }}
-            >              
-              <MenuItem value="ADMIN">Admin</MenuItem>
-            </TextField>
-
           </Grid>
 
           {/* Password (Add Only) */}
