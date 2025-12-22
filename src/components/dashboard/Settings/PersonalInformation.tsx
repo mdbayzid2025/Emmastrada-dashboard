@@ -9,12 +9,13 @@ import {
 } from "@mui/material";
 
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+
 
 import { imageUrl } from "../../../redux/base/baseAPI";
 import { useGetProfileQuery } from "../../../redux/features/auth/authApi";
 import { useEditProfileMutation } from "../../../redux/features/user/userApi";
 import SharedInput from "../../shared/SharedInput";
+import { toast } from "sonner";
 
 const PersonalInformation = () => {  
   const [imgURL, setImgURL] = useState<string | null>(null);

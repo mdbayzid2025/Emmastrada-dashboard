@@ -12,13 +12,14 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
-import toast from "react-hot-toast";
-import { FaTrashAlt, FaEdit } from "react-icons/fa";
-import LockIcon from "@mui/icons-material/Lock";
-import LockOpenIcon from "@mui/icons-material/LockOpen";
+import { useState } from "react";
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import { toast } from "sonner";
+import { useAddCategoryMutation, useDeleteCategoryMutation, useGetCategoriesQuery, useUpdateCategoryMutation } from "../../../redux/features/categoryApi";
 import ConfirmModal from "../../UI/ConfirmModel";
 import CategoryModal from "./CategoryModal";
+import Swal from "sweetalert2";
+
 
 
 /* ---------------- TYPES ---------------- */
@@ -30,23 +31,7 @@ interface Category {
   createdAt: string;
 }
 
-/* ---------------- MOCK DATA ---------------- */
-const MOCK_CATEGORIES: Category[] = [
-  {
-    _id: "1",
-    name: "Painting",
-    slug: "painting",
-    status: "ACTIVE",
-    createdAt: "2024-01-10",
-  },
-  {
-    _id: "2",
-    name: "Sculpture",
-    slug: "sculpture",
-    status: "INACTIVE",
-    createdAt: "2024-02-15",
-  },
-];
+
 
 /* ---------------- STYLES ---------------- */
 const StyledHeadCell = styled(TableCell)(() => ({
@@ -65,53 +50,67 @@ const StyledRow = styled(TableRow)(() => ({
 
 /* ---------------- COMPONENT ---------------- */
 const CategoryManage = () => {
-  const [categories, setCategories] = useState<Category[]>(MOCK_CATEGORIES);
   const [selected, setSelected] = useState<Category | null>(null);
   const [openModal, setOpenModal] = useState(false);
   const [openConfirm, setOpenConfirm] = useState(false);
 
+  const { data: categoriesData } = useGetCategoriesQuery({});
+  const [addCategory] = useAddCategoryMutation()
+  const [updateCategory] = useUpdateCategoryMutation()
+  const [deleteCategory] = useDeleteCategoryMutation()
+
   /* ---------- HANDLERS ---------- */
-  const handleCreate = (data: any) => {
-    setCategories((prev) => [
-      ...prev,
-      {
-        _id: Date.now().toString(),
-        name: data.name,
-        slug: data.slug,
-        status: "ACTIVE",
-        createdAt: new Date().toISOString().split("T")[0],
-      },
-    ]);
-    toast.success("Category added successfully");
+  const handleCreate = async (data: any) => {
+
+    try {
+      const res = await addCategory(data).unwrap();
+      if (res?.data) {
+        toast.success(res?.message);
+      }
+    } catch (error) {
+      console.log("category Error", error);
+    }
   };
 
-  const handleUpdate = (data: any) => {
-    setCategories((prev) =>
-      prev.map((c) =>
-        c._id === selected?._id ? { ...c, ...data } : c
-      )
-    );
-    toast.success("Category updated successfully");
+  const handleUpdate = async (data: any) => {
+    try {
+      const res = await updateCategory({ id: selected?._id, name: data?.name }).unwrap();
+      if (res?.data) {
+        toast.success(res?.message);
+      }
+    } catch (error) {
+      console.log("category Error", error);
+    }
   };
 
-  const handleDelete = () => {
-    if (!selected) return;
-    setCategories((prev) => prev.filter((c) => c._id !== selected._id));
-    toast.success("Category deleted");
-    setOpenConfirm(false);
-    setSelected(null);
+
+  const handleDelete2 = (id:string) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+      theme: 'dark'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await deleteCategory(id).unwrap();          
+        } catch (error) {
+          console.log("category Error", error);
+        }
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+          theme: 'dark'
+        });
+      }
+    });
   };
 
-  const toggleStatus = (cat: Category) => {
-    setCategories((prev) =>
-      prev.map((c) =>
-        c._id === cat._id
-          ? { ...c, status: c.status === "ACTIVE" ? "INACTIVE" : "ACTIVE" }
-          : c
-      )
-    );
-    toast.success("Status updated");
-  };
 
   return (
     <Box sx={{ p: 3, backgroundColor: "var(--color-cardBg)", borderRadius: 2 }}>
@@ -123,8 +122,7 @@ const CategoryManage = () => {
         <Button variant="contained" onClick={() => setOpenModal(true)}>
           Add Category
         </Button>
-      </Box>
-
+      </Box>     
       {/* Table */}
       <TableContainer component={Paper} sx={{ background: "transparent" }}>
         <Table>
@@ -139,11 +137,11 @@ const CategoryManage = () => {
             </StyledRow>
           </TableHead>
           <TableBody>
-            {categories.map((cat, index) => (
+            {categoriesData?.length > 0 && categoriesData.map((cat: any, index: number) => (
               <StyledRow key={cat._id}>
                 <TableCell sx={{ color: "white" }}>{index + 1}</TableCell>
                 <TableCell sx={{ color: "white" }}>{cat.name}</TableCell>
-                <TableCell sx={{ color: "white" }}>{cat.slug}</TableCell>
+                <TableCell sx={{ color: "white" }}>{cat.type}</TableCell>
                 <TableCell>
                   <span
                     style={{
@@ -152,12 +150,12 @@ const CategoryManage = () => {
                       fontSize: 13,
                       fontWeight: 600,
                       background:
-                        cat.status === "ACTIVE" ? "#E6F7E6" : "#4a4d52",
+                        cat.isActive ? "#E6F7E6" : "#4a4d52",
                       color:
-                        cat.status === "ACTIVE" ? "#2E7D32" : "#d5d7da",
+                        cat.isActive ? "#2E7D32" : "#d5d7da",
                     }}
                   >
-                    {cat.status}
+                    {cat.isActive ? "Active" : "Block"}
                   </span>
                 </TableCell>
                 <TableCell sx={{ color: "white" }}>
@@ -174,18 +172,9 @@ const CategoryManage = () => {
                       <FaEdit color="#60a5fa" />
                     </IconButton>
 
-                    <IconButton onClick={() => toggleStatus(cat)}>
-                      {cat.status === "ACTIVE" ? (
-                        <LockOpenIcon color="success" />
-                      ) : (
-                        <LockIcon color="error" />
-                      )}
-                    </IconButton>
-
                     <IconButton
-                      onClick={() => {
-                        setSelected(cat);
-                        setOpenConfirm(true);
+                      onClick={() => {                        
+                        handleDelete2(cat?._id);
                       }}
                     >
                       <FaTrashAlt color="#ef4444" />
@@ -198,16 +187,6 @@ const CategoryManage = () => {
         </Table>
       </TableContainer>
 
-      {/* Delete Confirm */}
-      <ConfirmModal
-        open={openConfirm}
-        title="Delete Category?"
-        content={`Are you sure you want to delete "${selected?.name}"?`}
-        okText="Delete"
-        cancelText="Cancel"
-        onConfirm={handleDelete}
-        onCancel={() => setOpenConfirm(false)}
-      />
 
       {/* Add / Edit Modal */}
       <CategoryModal
@@ -221,6 +200,7 @@ const CategoryManage = () => {
           selected ? handleUpdate(data) : handleCreate(data)
         }
       />
+
     </Box>
   );
 };

@@ -1,9 +1,10 @@
 
 import JoditEditor from "jodit-react";
 import React, { useEffect, useRef, useState } from "react";
-import toast from "react-hot-toast";
+
 import { useAddDisclaimerMutation, useGetAboutQuery } from "../../../redux/features/setting/settingApi";
 import { Button } from "@mui/material";
+import { toast } from "sonner";
 
 const About = () => {
   const editor = useRef(null);

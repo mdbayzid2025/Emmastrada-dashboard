@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from "react";
 import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
   Button,
-  Grid,
-  TextField,
-  MenuItem,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Grid
 } from "@mui/material";
-import SharedInput from "../../shared/SharedInput";
+import React, { useEffect, useState } from "react";
 import SelectField from "../../shared/SelectField";
+import SharedInput from "../../shared/SharedInput";
 
 interface Props {
   open: boolean;
@@ -81,7 +79,7 @@ const CategoryModal: React.FC<Props> = ({
             />
           </Grid>
 
-          <Grid size={12}>
+          {!editData && <Grid size={12}>
             <SelectField
               label="Type"
               value={values.type}
@@ -93,7 +91,7 @@ const CategoryModal: React.FC<Props> = ({
                 { label: "Genre", value: "GENRE" },
               ]}
             />
-          </Grid>
+          </Grid>}
         </Grid>
       </DialogContent>
 

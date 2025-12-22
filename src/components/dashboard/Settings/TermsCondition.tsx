@@ -2,7 +2,8 @@
 import { Button } from "@mui/material";
 import JoditEditor from "jodit-react";
 import React, { useRef, useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
+
 
 const TermsCondition = () => {
   const editor = useRef(null);

@@ -1,12 +1,13 @@
 
 import JoditEditor from "jodit-react";
 import React, { useEffect, useRef, useState } from "react";
-import toast from "react-hot-toast";
+
 import {
   useAddDisclaimerMutation,
   useGetPrivacyPolicyQuery,
 } from "../../redux/features/setting/settingApi";
 import { Button } from "@mui/material";
+import { toast } from "sonner";
 
 const PrivacyPolicy = () => {
   const editor = useRef(null);

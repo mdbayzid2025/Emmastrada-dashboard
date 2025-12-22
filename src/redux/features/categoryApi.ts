@@ -2,11 +2,20 @@ import { baseApi } from "../base/baseAPI";
 
 const categoryApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    // GET all categories (with query params if any in URL)
+      // CREATE category
+    addCategory: build.mutation({
+      query: (data) => ({
+        url: "/categories/create",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["category"],
+    }),
+
     getCategories: build.query({
-      query: () => `/category${location?.search || ""}`,
+      query: () => `/categories/for-admin${location?.search || ""}`,
       providesTags: ["category"],
-    //   transformResponse: (res: { data: any }) => res.data,
+      transformResponse: (res: { data: any }) => res.data,
     }),
 
     // GET single category by id
@@ -16,22 +25,14 @@ const categoryApi = baseApi.injectEndpoints({
       transformResponse: (res: { data: any }) => res.data,
     }),
 
-    // CREATE category
-    addCategory: build.mutation({
-      query: (data) => ({
-        url: "/category",
-        method: "POST",
-        body: data,
-      }),
-      invalidatesTags: ["category"],
-    }),
+  
 
     // UPDATE category
     updateCategory: build.mutation({
       query: (data) => ({
-        url: `/category/${data.id}`,
+        url: `/categories/${data.id}`,
         method: "PATCH",
-        body: data.formData,
+        body: data,
       }),
       invalidatesTags: ["category"],
     }),
@@ -39,7 +40,7 @@ const categoryApi = baseApi.injectEndpoints({
     // DELETE category
     deleteCategory: build.mutation({
       query: (id) => ({
-        url: `/category/${id}`,
+        url: `/categories/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["category"],

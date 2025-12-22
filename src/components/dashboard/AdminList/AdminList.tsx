@@ -15,11 +15,12 @@ import {
   Typography
 } from "@mui/material";
 import React, { useState } from "react";
-import toast from "react-hot-toast";
+
 import { FaTrashAlt } from "react-icons/fa";
 import { IoEyeOutline } from "react-icons/io5";
 import ConfirmModal from "../../UI/ConfirmModel";
 import AddAdminModal from "./AddAdminModal"; // Your existing AddAdminModal
+import { toast } from "sonner";
 
 // ---------- MOCK DATA ----------
 interface Admin {
