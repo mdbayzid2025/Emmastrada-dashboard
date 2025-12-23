@@ -19,6 +19,7 @@ import { useAddCategoryMutation, useDeleteCategoryMutation, useGetCategoriesQuer
 import ConfirmModal from "../../UI/ConfirmModel";
 import CategoryModal from "./CategoryModal";
 import Swal from "sweetalert2";
+import dayjs from "dayjs";
 
 
 
@@ -159,7 +160,7 @@ const CategoryManage = () => {
                   </span>
                 </TableCell>
                 <TableCell sx={{ color: "white" }}>
-                  {cat.createdAt}
+                  {dayjs(cat.createdAt).format("DD MMM, YYYY")}
                 </TableCell>
                 <TableCell>
                   <Box display="flex" justifyContent="center" gap={1}>

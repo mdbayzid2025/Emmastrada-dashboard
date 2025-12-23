@@ -1,16 +1,21 @@
-import React from "react";
 import {
-  Grid,
-  TextField,
   Button,
+  Grid,
   InputAdornment,
+  TextField,
 } from "@mui/material";
+import Cookies from "js-cookie";
+import React from "react";
 import { HiOutlineMailOpen } from "react-icons/hi";
-import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import { useForgetPasswordMutation } from "../../redux/features/auth/authApi";
 
 const ForgotPassword: React.FC = () => {
   const navigate = useNavigate();
+
+  const [forgetPassword] = useForgetPasswordMutation()
+
 
   const handleForgotPassword = async (e: any) => {
     e.preventDefault();
@@ -26,16 +31,23 @@ const ForgotPassword: React.FC = () => {
     }
 
     try {
-      console.log("Forgot Password Request:", values);
+      const res = await forgetPassword(values).unwrap();
+      if (res?.success) {
+        toast.success(res?.message);
+        Cookies.set("resetEmail", values.email)        
+         // ⏱️ OTP valid for 2 minutes
+      const expiryTime = Date.now() + 3 * 60 * 1000;
+      Cookies.set("otpExpiry", expiryTime.toString());
 
-      toast.success("Verification code sent to your email!");
-      navigate("/verify-otp");
+        navigate("/verify-otp");
+      }
     } catch (error: any) {
-      console.error("Forgot Password Error:", error);
+      console.log("error", error);
       toast.error(error?.data?.message || "Something went wrong");
     }
   };
 
+  
   return (
     <div
       style={{ backgroundImage: `url('/authBg.png')` }}

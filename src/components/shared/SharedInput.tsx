@@ -56,7 +56,9 @@ const SharedInput = ({
         "& .MuiInputLabel-root": {
           color: "#ccc",
         },
-
+        "&.Mui-focused fieldset": {
+          borderColor: "rgba(255,255,255,0.5)",
+        },
         "& .MuiInputLabel-root.Mui-focused": {
           color: "var(--color-black-200)",
         },
@@ -70,9 +72,9 @@ const SharedInput = ({
         },
 
         "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-          {
-            borderColor: "rgba(255,255,255,0.5)",
-          },
+        {
+          borderColor: "rgba(255,255,255,0.5)",
+        },
 
         ...sx,
       }}

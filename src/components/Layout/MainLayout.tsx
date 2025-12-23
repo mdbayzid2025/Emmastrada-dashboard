@@ -20,9 +20,7 @@ const MainLayout: React.FC = () => {
           transition: "margin-left 0.3s ease",
           // match your sidebar width
           display: "flex",
-          flexDirection: "column",
-          
-
+          flexDirection: "column",        
         }}
       >
         {/* Header */}

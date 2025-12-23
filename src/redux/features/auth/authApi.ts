@@ -53,6 +53,17 @@ const authApi = baseApi.injectEndpoints({
         };
       },
     }),
+
+    resendOTP: build.mutation({
+      query: (data) => {
+        return {
+          // url: "/auth/forgot-password",          
+          url: "/auth/resend-otp",          
+          method: "POST",
+          body: data,
+        };
+      },
+    }),
     verifyOTP: build.mutation({
       query: (data) => {
         return {
@@ -64,7 +75,7 @@ const authApi = baseApi.injectEndpoints({
     }),
     // reset password
     resetPassword: build.mutation({      
-      query: ({resetToken, ...data}) => {
+      query: (data) => {
 
        return {
         url: "/auth/reset-password",
@@ -72,7 +83,7 @@ const authApi = baseApi.injectEndpoints({
         body: data,
         headers: {
           "Content-Type": "application/json",          
-          Authorization: `${Cookies.get("resetToken")}`, 
+          token: `${Cookies.get("verifyToken")}`, 
         },                    
         }      
       },
@@ -84,8 +95,9 @@ export const {
   useLoginAdminMutation,
   useRegisterUserMutation,
   useChangePasswordMutation,
-
+  
   useResetPasswordMutation,
+  useResendOTPMutation,
   useVerifyOTPMutation,
   useForgetPasswordMutation,
   useGetProfileQuery,

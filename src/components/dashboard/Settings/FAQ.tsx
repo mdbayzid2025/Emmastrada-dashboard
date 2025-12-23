@@ -82,7 +82,7 @@ const FAQ = () => {
 
       {/* ------------------ FAQ Accordion List ------------------ */}
       {faqList.map((faq) => (
-        <Accordion key={faq.id} defaultExpanded sx={{ mb: 2, background: 'var(--color-cardBg)', }}>
+        <Accordion key={faq.id} defaultExpanded sx={{ mb: 2, background: 'var(--color-cardBg)', border: '1px solid rgba(255,255,255, 0.3)', borderRadius: 2 }}>
           <AccordionSummary
             expandIcon={<FaArrowDown />}
             aria-controls={`panel-${faq.id}`}
@@ -109,7 +109,7 @@ const FAQ = () => {
             </div>
           </AccordionSummary>
 
-          <AccordionDetails className="text-slate-700 font-semibold">{faq.answer}</AccordionDetails>
+          <AccordionDetails className="text-slate-400 font-sans">{faq.answer}</AccordionDetails>
         </Accordion>
       ))}
 

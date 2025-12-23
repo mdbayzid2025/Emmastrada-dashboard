@@ -21,6 +21,7 @@ import { IoEyeOutline } from "react-icons/io5";
 import ConfirmModal from "../../UI/ConfirmModel";
 import AddAdminModal from "./AddAdminModal"; // Your existing AddAdminModal
 import { toast } from "sonner";
+import { useCreateAdminMutation } from "../../../redux/features/user/userApi";
 
 // ---------- MOCK DATA ----------
 interface Admin {
@@ -58,7 +59,7 @@ const AdminList: React.FC = () => {
   const [selectedAdmin, setSelectedAdmin] = useState<Admin | null>(null);
   const [openConfirm, setOpenConfirm] = useState(false);
   const [openAddModal, setOpenAddModal] = useState(false);
-  
+  const [createAdmin] = useCreateAdminMutation()
 
   const handleDeleteAdmin = () => {
     if (!selectedAdmin) return;
@@ -77,9 +78,16 @@ const AdminList: React.FC = () => {
     toast.success("Admin status updated");
   };
 
-  const handleCreateAdmin = (admin: Admin) => {
-    setAdmins(prev => [...prev, { ...admin, _id: Date.now().toString() }]);
-    toast.success("Admin added successfully");
+  const handleCreateAdmin = async(values: Admin) => {
+      try {
+        const res = await createAdmin(values).unwrap();
+
+        console.log("res", res);        
+        toast.success(res?.data?.message);
+      } catch (error) {
+        console.log("error");
+        
+      }
   };
 
   return (
@@ -166,8 +174,8 @@ const AdminList: React.FC = () => {
       <AddAdminModal
         open={openAddModal}
         setOpen={setOpenAddModal}
-        onSubmit={(values: { email: string }) =>
-          handleCreateAdmin({ ...values, name: values.email.split("@")[0], role: "ADMIN", status: "ACTIVE", joinDate: new Date().toISOString(), _id: Date.now().toString() })
+        onSubmit={(values) =>
+          handleCreateAdmin(values)
         }
       />
 

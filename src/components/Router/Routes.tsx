@@ -15,12 +15,14 @@ import CampaignsList from "../dashboard/CampaignsList/CampaignsList";
 import Settings from "../dashboard/Settings/Settings";
 import CommissionManage from "../dashboard/CommissionManage/CommissionManage";
 import CategoryManage from "../dashboard/CategoryManage/CategoryManage";
+import PrivateRoute from "./PrivateRoute";
 
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <MainLayout />,
+        // element: <MainLayout />,
+        element: <PrivateRoute> <MainLayout /></PrivateRoute>,
         errorElement: <ErrorPage />,
         children: [
             {

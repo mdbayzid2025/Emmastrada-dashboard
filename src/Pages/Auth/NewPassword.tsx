@@ -9,11 +9,15 @@ import {
 import { MdOutlineVisibility, MdOutlineVisibilityOff } from "react-icons/md";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import { useResetPasswordMutation } from "../../redux/features/auth/authApi";
+import Cookies from "js-cookie";
+
 
 const NewPassword: React.FC = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [resetPassword] = useResetPasswordMutation()
 
   const handleTogglePassword = () => setShowPassword((prev) => !prev);
   const handleToggleConfirmPassword = () =>
@@ -34,12 +38,16 @@ const NewPassword: React.FC = () => {
     }
 
     try {
-      console.log("New Password Request:", values);
-      toast.success("Password updated successfully!");
-      navigate("/");
-    } catch (error: any) {
-      console.error("New Password Error:", error);
-      toast.error(error?.message || "Something went wrong");
+
+      const res = await resetPassword(values).unwrap();
+      
+      if(res?.success){
+        toast.message(res?.message)        
+        Cookies.remove("verifyToken")
+        navigate("/login");
+      }
+    } catch (error: any) {      
+      toast.error(error?.data?.message);
     }
   };
 

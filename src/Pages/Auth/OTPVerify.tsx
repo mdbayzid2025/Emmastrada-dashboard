@@ -2,10 +2,22 @@ import { Box, Button, Grid, TextField } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import Cookies from "js-cookie";
+import { useResendOTPMutation, useVerifyOTPMutation } from "../../redux/features/auth/authApi";
+import { useOtpTimer } from "../../hooks/useOtpTimer";
+
 
 const OTPVerify: React.FC = () => {
   const navigate = useNavigate();
-  const [otp, setOtp] = useState(["", "", "", ""]);
+  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
+  const [verifyOTP] = useVerifyOTPMutation()
+  const [resendOTP] = useResendOTPMutation()
+  const [timerKey, setTimerKey] = useState(0);
+
+  const secondsLeft = useOtpTimer(timerKey);
+  const minutes = String(Math.floor(secondsLeft / 60)).padStart(2, "0");
+  const seconds = String(secondsLeft % 60).padStart(2, "0");
+
 
   const handleChange = (index: number, value: string) => {
     if (/^\d*$/.test(value)) {
@@ -13,7 +25,7 @@ const OTPVerify: React.FC = () => {
       newOtp[index] = value.slice(-1); // keep only last digit
       setOtp(newOtp);
 
-      if (value && index < 3) {
+      if (value && index < 5) {
         const nextInput = document.getElementById(`otp-${index + 1}`);
         nextInput?.focus();
       }
@@ -23,29 +35,59 @@ const OTPVerify: React.FC = () => {
   const handleOTPVerify = async (e: any) => {
     e.preventDefault();
 
+    const email = Cookies.get("resetEmail");
+
+    if (!email) {
+      toast.error("Reset Email Not Found!");
+      return;
+    }
+
     const otpCode = otp.join("");
 
-    if (otpCode.length < 4) {
+    if (otpCode.length < 5) {
       toast.error("Please enter the complete OTP");
       return;
     }
 
     try {
-      console.log("OTP Verify Request:", otpCode);
-      toast.success("OTP Verified successfully!");
-      navigate("/new-password");
+
+      const res = await verifyOTP({ email, oneTimeCode: Number(otpCode) }).unwrap();
+      if (res?.data) {
+        Cookies.set("verifyToken", res?.data?.verifyToken)
+        Cookies.remove("resetEmail")
+        toast.success(res?.message);
+        navigate("/new-password");
+      }
     } catch (error: any) {
       console.error("OTP Verify Error:", error);
-      toast.error(error?.message || "Something went wrong");
+      toast.error(error?.data?.message);
     }
   };
 
-  const handleResend = () => {
-    toast.success("OTP resent successfully!");
-    setOtp(["", "", "", ""]);
-    const firstInput = document.getElementById("otp-0");
-    firstInput?.focus();
-  };
+
+
+  const handleResendOtp = async () => {
+    setOtp(["", "", "", "", "", ""]);
+
+    try {
+      const email = Cookies.get("resetEmail");
+      const res = await resendOTP({ email }).unwrap();
+
+      if (res?.success) {
+        toast.success(res.message);
+
+        // ⏱ reset expiry
+        const expiryTime = Date.now() + 3 * 60 * 1000;
+        Cookies.set("otpExpiry", expiryTime.toString());
+
+        // 🔥 force timer restart
+        setTimerKey((prev) => prev + 1);
+      }
+    } catch (error: any) {
+      toast.error(error?.data?.message);
+    }
+  }
+
 
   return (
     <div
@@ -113,9 +155,8 @@ const OTPVerify: React.FC = () => {
 
             {/* Timer */}
             <div className="text-center mb-5">
-              <p className="text-textColor mb-2">A code has been sent</p>
-              <span className="text-primary text-xl font-semibold">
-                00:00
+              <span className="text-xl font-semibold text-red-200">
+                {secondsLeft > 0 ? `${minutes}:${seconds}` : "OTP Expired"}
               </span>
             </div>
 
@@ -139,9 +180,10 @@ const OTPVerify: React.FC = () => {
 
             {/* Resend */}
             <Button
+              disabled={secondsLeft}
               fullWidth
               variant="outlined"
-              onClick={handleResend}
+              onClick={handleResendOtp}
               sx={{
                 color: "#FF6F61",
                 borderColor: "#FF6F61",
@@ -149,6 +191,7 @@ const OTPVerify: React.FC = () => {
                 textTransform: "none",
                 fontSize: "16px",
                 borderRadius: "20px",
+                background: secondsLeft ? "rgba(2555,255,255, 0.3)" : "transparent"
               }}
             >
               Resend OTP
