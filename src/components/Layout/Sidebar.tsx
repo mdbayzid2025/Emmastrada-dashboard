@@ -9,9 +9,9 @@ import {
   ListItemText,
   Tooltip,
 } from "@mui/material";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+import { Link, useLocation } from "react-router-dom";
 import { navItems } from "./SidebarItems";
-import Cookies from "js-cookie"
 
 const Sidebar = () => {
   const location = useLocation();

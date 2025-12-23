@@ -12,14 +12,13 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
+import dayjs from "dayjs";
 import { useState } from "react";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { toast } from "sonner";
-import { useAddCategoryMutation, useDeleteCategoryMutation, useGetCategoriesQuery, useUpdateCategoryMutation } from "../../../redux/features/categoryApi";
-import ConfirmModal from "../../UI/ConfirmModel";
-import CategoryModal from "./CategoryModal";
 import Swal from "sweetalert2";
-import dayjs from "dayjs";
+import { useAddCategoryMutation, useDeleteCategoryMutation, useGetCategoriesQuery, useUpdateCategoryMutation } from "../../../redux/features/categoryApi";
+import CategoryModal from "./CategoryModal";
 
 
 
@@ -52,8 +51,7 @@ const StyledRow = styled(TableRow)(() => ({
 /* ---------------- COMPONENT ---------------- */
 const CategoryManage = () => {
   const [selected, setSelected] = useState<Category | null>(null);
-  const [openModal, setOpenModal] = useState(false);
-  const [openConfirm, setOpenConfirm] = useState(false);
+  const [openModal, setOpenModal] = useState(false);  
 
   const { data: categoriesData } = useGetCategoriesQuery({});
   const [addCategory] = useAddCategoryMutation()

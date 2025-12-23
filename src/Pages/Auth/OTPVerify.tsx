@@ -180,7 +180,7 @@ const OTPVerify: React.FC = () => {
 
             {/* Resend */}
             <Button
-              disabled={secondsLeft}
+              disabled={secondsLeft ? true: false}
               fullWidth
               variant="outlined"
               onClick={handleResendOtp}

@@ -1,16 +1,15 @@
-import React, { useEffect } from "react";
 import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
   Button,
-  TextField,
-  MenuItem,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Grid,
   IconButton,
   InputAdornment,
-  Grid,
+  TextField
 } from "@mui/material";
+import React, { useEffect } from "react";
 import { MdOutlineVisibility, MdOutlineVisibilityOff } from "react-icons/md";
 import SharedInput from "../../shared/SharedInput";
 
