@@ -1,34 +1,54 @@
 
 import { Button } from "@mui/material";
 import JoditEditor from "jodit-react";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
+import { useAddDisclaimerMutation, useGetTermsConditionQuery } from "../../../redux/features/setting/settingApi";
 
 
 const TermsCondition = () => {
   const editor = useRef(null);
   const [content, setContent] = useState(initialContent || "");
   const [showEditor, setShowEditor] = useState(false);
+  const {data: termsData} = useGetTermsConditionQuery({})
 
-  const handleSubmit = () => {
-    const tempDiv = document.createElement("div");
-    tempDiv.innerHTML = content;
-    const plainText = tempDiv.innerText.trim();
+const [addDisclaimer] = useAddDisclaimerMutation();
 
-    if (!plainText) {
-      toast.error("Content cannot be empty");
-      return;
+
+
+  if(termsData){
+    console.log("termsData",termsData);
+  }
+
+  useEffect(()=>{
+    if(termsData){
+      setContent(termsData)
     }
+  },[termsData])
 
-    try {
-      localStorage.setItem("aboutContent", content); // store HTML directly
-      toast.success("Saved successfully");
-      setShowEditor(false);
-    } catch (err) {
-      console.error("Error saving:", err);
-      toast.error("Failed to save content");
-    }
-  };
+  
+  const handleSubmit = async () => {
+     const tempDiv = document.createElement("div");
+     tempDiv.innerHTML = content;
+     const plainText = tempDiv.innerText.trim();
+ 
+     if (!plainText) {
+       toast.error("Content cannot be empty");
+       return;
+     }
+ 
+     try {
+       const res = await addDisclaimer({termsOfService: content}).unwrap();
+         
+       toast.success(res?.message);
+       setShowEditor(false);
+     } catch (err) {
+       console.error("Error saving:", err);
+       toast.error("Failed to save content");
+     }
+   };
+
+
 const config = React.useMemo((): any => {
   return {
     theme: "dark",

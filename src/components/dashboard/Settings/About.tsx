@@ -2,24 +2,25 @@
 import JoditEditor from "jodit-react";
 import React, { useEffect, useRef, useState } from "react";
 
-import { useAddDisclaimerMutation, useGetAboutQuery } from "../../../redux/features/setting/settingApi";
 import { Button } from "@mui/material";
 import { toast } from "sonner";
+import { useAddDisclaimerMutation, useGetAboutQuery } from "../../../redux/features/setting/settingApi";
 
 const About = () => {
   const editor = useRef(null);
   const [content, setContent] = useState("");
   const [showEditor, setShowEditor] = useState(false);
 
-  const {data: aboutData} = useGetAboutQuery(undefined);
+  const {data: aboutData, } = useGetAboutQuery(undefined);
   const [addDisclaimer] = useAddDisclaimerMutation();
 
-  if(aboutData){console.log("aboutData",aboutData);
+  if(aboutData){
+    console.log("aboutData",aboutData);
   }
 
   useEffect(()=>{
     if(aboutData){
-      setContent(aboutData?.content)
+      setContent(aboutData?.data)
     }
   },[aboutData])
 
@@ -34,8 +35,7 @@ const About = () => {
     }
 
     try {
-      const res = await addDisclaimer({type: "about", content}).unwrap();
-      
+      const res = await addDisclaimer({aboutUs: content}).unwrap();
         
       toast.success(res?.message);
       setShowEditor(false);

@@ -42,23 +42,23 @@ const router = createBrowserRouter([
             {
                 path: "users",
                 element: <UserList />
-            },                              
+            },
             {
                 path: "sliders-manage",
                 element: <SliderManage />
-            },                                                                                  
+            },
             {
                 path: "category-manage",
                 element: <CategoryManage />
-            },                                                                                  
+            },
             {
                 path: "commission-manage",
                 element: <CommissionManage />
-            },                                                                                  
+            },
             {
                 path: "campaigns-list",
                 element: <CampaignsList />
-            },                                                                                  
+            },
             {
                 path: "settings",
                 element: <Settings />
@@ -69,10 +69,10 @@ const router = createBrowserRouter([
             },
         ]
     },
-    {path: "/login", element: <Login />},
-    {path: "/forgot-password", element: <ForgotPassword />},
-    {path: "/verify-otp", element: <OTPVerify />},
-    {path: "/new-password", element: <NewPassword />},
+    { path: "/login", element: <Login /> },
+    { path: "/forgot-password", element: <ForgotPassword /> },
+    { path: "/verify-otp", element: <OTPVerify /> },
+    { path: "/new-password", element: <NewPassword /> },
 ]);
 
 export default router;
