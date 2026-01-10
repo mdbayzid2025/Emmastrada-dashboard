@@ -50,7 +50,7 @@ type props  = {
 }
 
 
-const HostsList = ({open, setOpen}: props) => {
+const CartList = ({open, setOpen}: props) => {
   const [currentPage, setCurrentPage] = useState(1);  
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -175,7 +175,7 @@ const HostsList = ({open, setOpen}: props) => {
   );
 };
 
-export default HostsList;
+export default CartList;
 
 const hostsData = [
   {

@@ -49,7 +49,6 @@ const FAQ = () => {
           if (result.isConfirmed) {
              try {
         const res = await deleteFAQ(faqId).unwrap();
-
         console.log("resres", res);
         refetch()
         toast.success(res?.message);

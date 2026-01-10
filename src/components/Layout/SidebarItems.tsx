@@ -1,8 +1,9 @@
 import { Copy, DollarSign, Images, Music } from "lucide-react";
 import { FaStore } from "react-icons/fa";
-import { IoSettingsOutline } from "react-icons/io5";
+import { IoHelpBuoyOutline, IoSettingsOutline } from "react-icons/io5";
 import { LuNotepadText } from "react-icons/lu";
 import { MdOutlineDashboard } from "react-icons/md";
+import { BiMoneyWithdraw } from "react-icons/bi";
 
 interface NavItem {
   to: string;
@@ -26,6 +27,16 @@ export const navItems: NavItem[] = [
     to: "/category-manage",
     label: "Category Manage",
     icon: <Copy />
+  },
+  {
+    to: "/planner-manage",
+    label: "Planner Manage",
+    icon: <IoHelpBuoyOutline />
+  },
+  {
+    to: "/withdraw-manage",
+    label: "WIthdraw Manage",
+    icon: <BiMoneyWithdraw />
   },
   {
     to: "/sliders-manage",

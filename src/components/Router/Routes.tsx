@@ -17,6 +17,8 @@ import CommissionManage from "../dashboard/CommissionManage/CommissionManage";
 import CategoryManage from "../dashboard/CategoryManage/CategoryManage";
 import PrivateRoute from "./PrivateRoute";
 import SliderManage from "../dashboard/SlidersManage/SlidersManage";
+import WithdrawManage from "../dashboard/WithdrawManage/WithdrawManage";
+import PlannerManage from "../dashboard/PlannerManage/PlannerManage";
 
 
 
@@ -50,6 +52,14 @@ const router = createBrowserRouter([
             {
                 path: "category-manage",
                 element: <CategoryManage />
+            },
+            {
+                path: "withdraw-manage",
+                element: <WithdrawManage />
+            },
+            {
+                path: "planner-manage",
+                element: <PlannerManage />
             },
             {
                 path: "commission-manage",
