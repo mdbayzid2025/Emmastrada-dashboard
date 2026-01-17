@@ -52,7 +52,7 @@ const ReportManage = () => {
     const [currentPage, setCurrentPage] = useState(Math.max(1, page || 1));
     const [searchText, setSearchText] = useState("");
 
-    
+
     const updateSearchParams = useUpdateSearchParams();
     const { searchTerm } = getSearchParams();
 
@@ -171,7 +171,7 @@ const ReportManage = () => {
         try {
             const res = await deleteReport(id).unwrap();
             console.log("handleRejectReport", res);
-            
+
             refetch();
             Swal.fire({
                 title: "Blocked!",
@@ -215,8 +215,7 @@ const ReportManage = () => {
                     )}
                 </Box>
 
-                <Box display="flex" gap={2}>
-
+                {/* <Box display="flex" gap={2}>
                     <TextField
                         placeholder="Search by reporter, user..."
                         value={searchText}
@@ -235,7 +234,7 @@ const ReportManage = () => {
                     />
 
                     <SharedInput width={350} onChange={handleSearch} placeholder="Searh by name, email" />
-                </Box>
+                </Box> */}
             </Box>
 
             <TableContainer component={Paper} className="bg-transparent!">
