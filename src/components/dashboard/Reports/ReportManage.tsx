@@ -2,7 +2,6 @@ import {
     Box,
     Button,
     Chip,
-    InputAdornment,
     Pagination,
     Paper,
     Stack,
@@ -13,12 +12,11 @@ import {
     TableContainer,
     TableHead,
     TableRow,
-    TextField,
     Typography
 } from "@mui/material";
 import { AlertTriangle } from "lucide-react";
 import { useEffect, useState } from "react";
-import { FaFlag, FaSearch } from "react-icons/fa";
+import { FaFlag } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { imageUrl } from "../../../redux/base/baseAPI";
 import {
@@ -29,7 +27,6 @@ import {
 import { getSearchParams } from "../../../utils/getSearchParams";
 import { useUpdateSearchParams } from "../../../utils/updateSearchParams";
 import { FormatDate } from "../../shared/FormatDate";
-import SharedInput from "../../shared/SharedInput";
 
 
 const StyledHeadCell = styled(TableCell)(() => ({
@@ -50,8 +47,6 @@ const ReportManage = () => {
     const { page } = getSearchParams();
     //   @ts-ignore
     const [currentPage, setCurrentPage] = useState(Math.max(1, page || 1));
-    const [searchText, setSearchText] = useState("");
-
 
     const updateSearchParams = useUpdateSearchParams();
     const { searchTerm } = getSearchParams();
@@ -60,8 +55,7 @@ const ReportManage = () => {
     const [deleteReport] = useDeleteReportMutation()
     const [actionReport] = useActionReportMutation()
 
-    useEffect(() => {
-        setSearchText(searchTerm);
+    useEffect(() => {        
         refetch();
     }, [searchTerm, refetch]);
 
@@ -72,11 +66,6 @@ const ReportManage = () => {
         refetch();
     }, [page, refetch]);
 
-    const handleSearch = (e: any) => {
-        const search = e.target.value;
-        setSearchText(search);
-        updateSearchParams({ searchTerm: search });
-    };
 
     const handleChangePage = (_?: any, newPage?: any) => {
         setCurrentPage(newPage);
